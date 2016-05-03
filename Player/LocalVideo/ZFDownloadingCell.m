@@ -24,7 +24,7 @@
 #import "ZFDownloadingCell.h"
 
 @interface ZFDownloadingCell ()
-@property (nonatomic, assign) BOOL hasDownloadAnimation;
+
 @end
 
 @implementation ZFDownloadingCell
@@ -35,6 +35,7 @@
     self.downloadBtn.clipsToBounds = true;
     [self.downloadBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [self.downloadBtn setTitle:@"🕘" forState:UIControlStateNormal];
+    [self.downloadBtn setTitle:@"↓" forState:UIControlStateSelected];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -44,46 +45,14 @@
 }
 
 /**
- *  添加下载的动画
- */
-- (void)addDownloadAnimation {
-    if(self.downloadBtn && !self.hasDownloadAnimation){
-        self.hasDownloadAnimation = YES;
-        //1.创建关键帧动画并设置动画属性
-        CAKeyframeAnimation *keyframeAnimation=[CAKeyframeAnimation animationWithKeyPath:@"position"];
-        
-        //2.设置关键帧
-        NSValue *key1 = [NSValue valueWithCGPoint:CGPointMake(self.downloadBtn.center.x, self.downloadBtn.frame.origin.y)];//对于关键帧动画初始值不能省略
-        NSValue *key2 = [NSValue valueWithCGPoint:CGPointMake(self.downloadBtn.center.x, self.downloadBtn.frame.size.height+self.downloadBtn.frame.origin.y)];
-        NSArray *values = @[key1,key2];
-        keyframeAnimation.values = values;
-        //设置其他属性
-        keyframeAnimation.duration = 1.2;
-        keyframeAnimation.repeatCount = MAXFLOAT;
-        
-        //3.添加动画到图层，添加动画后就会执行动画
-        [self.downloadBtn.layer addAnimation:keyframeAnimation forKey:@"downloadBtn"];
-        [self.downloadBtn setTitle:@"↓" forState:UIControlStateNormal];
-    }
-}
-
-/**
- *  移除下载button的动画
- */
-- (void)removeDownloadAnimtion {
-    self.hasDownloadAnimation = NO;
-    [self.downloadBtn.layer removeAnimationForKey:@"downloadBtn"];
-    [self.downloadBtn setTitle:@"🕘" forState:UIControlStateNormal];
-}
-
-/**
  *  暂停、下载
  *
  *  @param sender UIButton
  */
 - (IBAction)clickDownload:(UIButton *)sender {
+//    sender.selected = !sender.selected;
     if (self.downloadBlock) {
-        self.downloadBlock();
+        self.downloadBlock(sender);
     }
 }
 

@@ -53,16 +53,8 @@
 
 - (void)initData
 {
-    NSMutableArray *downloads = [[ZFDownloadManager sharedInstance] getSessionModels].mutableCopy;
-    NSMutableArray *downladed = @[].mutableCopy;
-    NSMutableArray *downloading = @[].mutableCopy;
-    for (ZFSessionModel *obj in downloads) {
-        if ([[ZFDownloadManager sharedInstance] isCompletion:obj.url]) {
-            [downladed addObject:obj];
-        }else {
-            [downloading addObject:obj];
-        }
-    }
+    NSMutableArray *downladed = [ZFDownloadManager sharedInstance].downloadedArray;
+    NSMutableArray *downloading = [ZFDownloadManager sharedInstance].downloadingArray;
     _downloadObjectArr = @[].mutableCopy;
     [_downloadObjectArr addObject:downladed];
     [_downloadObjectArr addObject:downloading];
@@ -77,35 +69,35 @@
     if (self.downloadObjectArr) {
         // 取到对应的cell上的model
         NSArray *downloadings = self.downloadObjectArr[1];
-        for (ZFSessionModel *model in downloadings) {
-            if ([model.url isEqualToString:sessionModel.url]) {
-                // 取到当前下载model在数组的位置，来确定cell的具体位置
-                NSInteger index = [downloadings indexOfObject:model];
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:1];
-                __block ZFDownloadingCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-                __weak typeof(self) weakSelf = self;
-                sessionModel.progressBlock = ^(CGFloat progress, NSString *speed, NSString *remainingTime, NSString *writtenSize, NSString *totalSize) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        cell.progressLabel.text = [NSString stringWithFormat:@"%@/%@ (%.2f%%)",writtenSize,totalSize,progress*100];
-                        cell.speedLabel.text    = speed;
-                        cell.progress.progress  = progress;
-                    });
-                };
-                sessionModel.stateBlock = ^(DownloadState state){
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if (state == DownloadStateStart) {
-                            [cell addDownloadAnimation];
-                        }else if (state == DownloadStateCompleted) {
-                            // 更新数据源
-                            [weakSelf initData];
-                            [cell removeDownloadAnimtion];
-                        }else if (state == DownloadStateSuspended) {
-                            [cell removeDownloadAnimtion];
-                            cell.speedLabel.text = @"已暂停";
-                        }
-                    });
-                };
-            }
+        if ([downloadings containsObject:sessionModel]) {
+            
+            NSInteger index = [downloadings indexOfObject:sessionModel];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:1];
+            __block ZFDownloadingCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            __weak typeof(self) weakSelf = self;
+            sessionModel.progressBlock = ^(CGFloat progress, NSString *speed, NSString *remainingTime, NSString *writtenSize, NSString *totalSize) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    cell.progressLabel.text   = [NSString stringWithFormat:@"%@/%@ (%.2f%%)",writtenSize,totalSize,progress*100];
+                    cell.speedLabel.text      = speed;
+                    cell.progress.progress    = progress;
+                    cell.downloadBtn.selected = YES;
+                });
+            };
+            
+            sessionModel.stateBlock = ^(DownloadState state){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // 更新数据源
+                    if (state == DownloadStateCompleted) {
+                        [weakSelf initData];
+                        cell.downloadBtn.selected = NO;
+                    }
+                    // 暂停
+                    if (state == DownloadStateSuspended) {
+                        cell.speedLabel.text = @"已暂停";
+                        cell.downloadBtn.selected = NO;
+                    }
+                });
+            };
         }
     }
 }
@@ -134,7 +126,7 @@
         ZFDownloadingCell *cell = [tableView dequeueReusableCellWithIdentifier:@"downloadingCell"];
         cell.sessionModel = downloadObject;
         [ZFDownloadManager sharedInstance].delegate = self;
-        cell.downloadBlock = ^ {
+        cell.downloadBlock = ^(UIButton *sender) {
             [[ZFDownloadManager sharedInstance] download:downloadObject.url progress:^(CGFloat progress, NSString *speed, NSString *remainingTime, NSString *writtenSize, NSString *totalSize) {} state:^(DownloadState state) {}];
         };
         return cell;

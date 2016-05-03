@@ -1,5 +1,5 @@
 //
-//  ZFPlayerModel.m
+//  ZFPlyerResolution.h
 //
 // Copyright (c) 2016年 任子丰 ( http://github.com/renzifeng )
 //
@@ -21,39 +21,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "ZFPlayerModel.h"
+#import <Foundation/Foundation.h>
 
-@implementation ZFPlayerModel
-
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key
-{
-    // 转换系统关键字description
-    if ([key isEqualToString:@"description"]) {
-        self.video_description = [NSString stringWithFormat:@"%@",value];
-    }
-
-}
-
-- (void)setValue:(id)value forKey:(NSString *)key
-{
-    if ([key isEqualToString:@"playInfo"]) {
-        self.playInfo = @[].mutableCopy;
-        NSMutableArray *array = @[].mutableCopy;
-        for (NSDictionary *dataDic in value) {
-            ZFPlyerResolution *resolution = [[ZFPlyerResolution alloc] init];
-            [resolution setValuesForKeysWithDictionary:dataDic];
-            [array addObject:resolution];
-        }
-        [self.playInfo removeAllObjects];
-        [self.playInfo addObjectsFromArray:array];
-    } else if ([key isEqualToString:@"title"]) {
-        self.title = value;
-    } else if ([key isEqualToString:@"playUrl"]) {
-        self.playUrl = value;
-    } else if ([key isEqualToString:@"coverForFeed"]) {
-        self.coverForFeed = value;
-    }
-    
- }
-
+@interface ZFPlyerResolution : NSObject
+@property (nonatomic, assign) NSInteger height;
+@property (nonatomic, assign) NSInteger width;
+@property (nonatomic, copy  ) NSString  *name;
+@property (nonatomic, copy  ) NSString  *type;
+@property (nonatomic, copy  ) NSString  *url;
 @end

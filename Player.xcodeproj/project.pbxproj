@@ -24,6 +24,7 @@
 		CC6C7AE51C9BDFE90000AD58 /* MoviePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC6C7AE41C9BDFE90000AD58 /* MoviePlayerViewController.m */; };
 		CC725C2D1C894D2500C3EAF2 /* ZFVideoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC725C2B1C894D2500C3EAF2 /* ZFVideoListViewController.m */; };
 		CC725C321C894D2D00C3EAF2 /* ZFDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC725C2F1C894D2D00C3EAF2 /* ZFDownloadViewController.m */; };
+		CC8693471CC9BF5E0037E71B /* ZFPlyerResolution.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8693461CC9BF5E0037E71B /* ZFPlyerResolution.m */; };
 		CCE1C1381C9AA115004C95AC /* ZFPlayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE1C1371C9AA115004C95AC /* ZFPlayerCell.m */; };
 		CCE1C13B1C9AA11F004C95AC /* ZFPlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE1C13A1C9AA11F004C95AC /* ZFPlayerModel.m */; };
 		CCE1C13E1C9AA128004C95AC /* ZFTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE1C13D1C9AA128004C95AC /* ZFTableViewController.m */; };
@@ -100,6 +101,8 @@
 		CC725C2B1C894D2500C3EAF2 /* ZFVideoListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFVideoListViewController.m; sourceTree = "<group>"; };
 		CC725C2E1C894D2D00C3EAF2 /* ZFDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFDownloadViewController.h; sourceTree = "<group>"; };
 		CC725C2F1C894D2D00C3EAF2 /* ZFDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFDownloadViewController.m; sourceTree = "<group>"; };
+		CC8693451CC9BF5E0037E71B /* ZFPlyerResolution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFPlyerResolution.h; sourceTree = "<group>"; };
+		CC8693461CC9BF5E0037E71B /* ZFPlyerResolution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFPlyerResolution.m; sourceTree = "<group>"; };
 		CCE1C1361C9AA115004C95AC /* ZFPlayerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFPlayerCell.h; sourceTree = "<group>"; };
 		CCE1C1371C9AA115004C95AC /* ZFPlayerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFPlayerCell.m; sourceTree = "<group>"; };
 		CCE1C1391C9AA11F004C95AC /* ZFPlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFPlayerModel.h; sourceTree = "<group>"; };
@@ -312,6 +315,8 @@
 				CCE1C13F1C9AA131004C95AC /* videoData.json */,
 				CCE1C1391C9AA11F004C95AC /* ZFPlayerModel.h */,
 				CCE1C13A1C9AA11F004C95AC /* ZFPlayerModel.m */,
+				CC8693451CC9BF5E0037E71B /* ZFPlyerResolution.h */,
+				CC8693461CC9BF5E0037E71B /* ZFPlyerResolution.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -522,6 +527,7 @@
 				CCEF1C251CAE76D300B0DD78 /* ZFDownloadManager.m in Sources */,
 				CC2CC63B1CA24D4B0028BBDD /* ZFBrightnessView.m in Sources */,
 				CC113C0E1C8C4E5D0044FEEB /* MainViewController.m in Sources */,
+				CC8693471CC9BF5E0037E71B /* ZFPlyerResolution.m in Sources */,
 				CC2CC63D1CA24D4B0028BBDD /* ZFPlayerControlView.m in Sources */,
 				CCEF1BF91CACB28E00B0DD78 /* ZFDownloadedCell.m in Sources */,
 				CCE1C13E1C9AA128004C95AC /* ZFTableViewController.m in Sources */,
@@ -599,7 +605,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -636,7 +642,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -651,7 +657,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Player/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.renzifeng.Player;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -667,7 +673,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				INFOPLIST_FILE = Player/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.renzifeng.Player;
 				PRODUCT_NAME = "$(TARGET_NAME)";
